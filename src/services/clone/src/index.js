@@ -9,7 +9,8 @@ const TicketForms = require('./objects/ticket_forms');
 
 var Minifinch = function () {
 
-  let accounts = [];
+  let accounts = {};
+  let filters = [];
 
   // Objects the user has selected
   let selectedObjects = [];
@@ -20,8 +21,9 @@ var Minifinch = function () {
   let ticketForms;
 
   // Start function - minifinch is called from here
-  this.start = function(accounts) {
-    accounts = accounts;
+  this.start = function(a, f) {
+    accounts = a;
+    filters = f;
     ticketForms = new TicketForms(accounts);
     getSelectionFromUser();
     organizeDependencies();
@@ -30,12 +32,15 @@ var Minifinch = function () {
 
   // Iterate through each model and get selection from user
   function getSelectionFromUser() {
-    for(let object in models){
-      let response = readlineSync.question(`${models[object].title}? (y/n) `);
-      if(response == 'y') {
-        selectedObjects.push(models[object]);
+    filters.forEach(function(filter) {
+      if(filter.enabled) {
+        models.forEach(function(model) {
+          if(filter.slug == model.name) {
+            selectedObjects.push(model)
+          }
+        })
       }
-    }
+    })
   };
 
   /**
