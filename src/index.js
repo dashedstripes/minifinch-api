@@ -11,6 +11,7 @@ app.use(bodyParser.json())
 
 require('./routes/setup')(api_router)
 require('./routes/accounts')(api_router)
+require('./routes/minifinch')(api_router)
 
 app.use('/api', api_router)
 
