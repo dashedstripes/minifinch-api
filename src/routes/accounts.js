@@ -30,4 +30,19 @@ module.exports = (router) => {
       })
     })
 
+    .put((req, res) => {
+      Account.update({
+        name: req.body.name,
+        subdomain: req.body.subdomain,
+        email: req.body.email,
+        token: req.body.token
+      }, {
+        where: {
+          id: req.params.account_id
+        }
+      }).then((account) => {
+        res.json({message: 'Account updated.'})
+      })
+    })
+
 }
