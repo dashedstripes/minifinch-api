@@ -28,13 +28,14 @@ var Minifinch = function () {
     filters = f;
     ticketForms = new TicketForms(accounts);
     getSelectionFromUser();
-    organizeDependencies();
-    io.emit('minifinch update', 'Cloning Started...')
-    createObjects();
+    // organizeDependencies();
+    // io.emit('minifinch update', 'Cloning Started...')
+    // createObjects();
   };
 
   // Iterate through each model and get selection from user
   function getSelectionFromUser() {
+    selectedObjects = []
     filters.forEach(function(filter) {
       if(filter.enabled) {
         models.forEach(function(model) {
@@ -44,6 +45,7 @@ var Minifinch = function () {
         })
       }
     })
+    console.log(selectedObjects)
   };
 
   /**
@@ -99,8 +101,8 @@ var Minifinch = function () {
       }).then(function() {
         Promise.all(objectsToCreatePromises).then(function(){
           io.emit('minifinch update', `${object.title} cloned!`)
-        });
-      });
+        })
+      })
     });
   }
 
