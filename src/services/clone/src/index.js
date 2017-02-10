@@ -45,7 +45,6 @@ var Minifinch = function () {
         })
       }
     })
-    console.log(selectedObjects)
   };
 
   /**
@@ -53,6 +52,7 @@ var Minifinch = function () {
    * save them into objectsToCreate
    */
   function organizeDependencies() {
+    objectsToCreate = []
     selectedObjects.forEach(function(object){
       if(objectsToCreate.indexOf(object) == -1){
         if(object.dependencies.length != 0) {
