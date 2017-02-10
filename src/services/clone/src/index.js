@@ -28,9 +28,9 @@ var Minifinch = function () {
     filters = f;
     ticketForms = new TicketForms(accounts);
     getSelectionFromUser();
-    // organizeDependencies();
-    // io.emit('minifinch update', 'Cloning Started...')
-    // createObjects();
+    organizeDependencies();
+    io.emit('minifinch update', 'Cloning Started...')
+    createObjects();
   };
 
   // Iterate through each model and get selection from user
