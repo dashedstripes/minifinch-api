@@ -9,6 +9,7 @@ const TicketForms = require('./objects/ticket_forms');
 
 var Minifinch = function () {
 
+  let io;
   let accounts = {};
   let filters = [];
 
@@ -21,12 +22,14 @@ var Minifinch = function () {
   let ticketForms;
 
   // Start function - minifinch is called from here
-  this.start = function(a, f) {
+  this.start = function(socketIO, a, f) {
+    io = socketIO;
     accounts = a;
     filters = f;
     ticketForms = new TicketForms(accounts);
     getSelectionFromUser();
     organizeDependencies();
+    io.emit('minifinch update', 'Cloning Started...')
     createObjects();
   };
 
@@ -95,7 +98,7 @@ var Minifinch = function () {
         });
       }).then(function() {
         Promise.all(objectsToCreatePromises).then(function(){
-          console.log(`${object.title} cloned!`); 
+          io.emit('minifinch update', `${object.title} cloned!`)
         });
       });
     });

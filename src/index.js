@@ -22,12 +22,12 @@ app.options('*', cors())
 
 require('./routes/setup')(api_router)
 require('./routes/accounts')(api_router)
-require('./routes/minifinch')(api_router)
+require('./routes/minifinch')(api_router, io)
 
 app.use('/api', api_router)
 
 io.on('connection', (socket) => {
-  console.log('connected')
+  io.emit('chat message', 'Hello world!')
 })
 
 app.get('*', (req, res) => {
